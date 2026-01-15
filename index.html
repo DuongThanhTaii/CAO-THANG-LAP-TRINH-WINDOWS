@@ -7,6 +7,90 @@
     <title>📚 Code Viewer - Lập Trình Windows</title>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <style>
+        /* Custom C# syntax colors like Visual Studio */
+        .hljs-keyword {
+            color: #569cd6;
+        }
+
+        /* blue - keywords like class, public, void */
+        .hljs-built_in {
+            color: #4ec9b0;
+        }
+
+        /* teal - built-in types like Console, List */
+        .hljs-type {
+            color: #4ec9b0;
+        }
+
+        /* teal - type names */
+        .hljs-class {
+            color: #4ec9b0;
+        }
+
+        .hljs-title {
+            color: #4ec9b0;
+        }
+
+        /* class/method names */
+        .hljs-title.function_ {
+            color: #dcdcaa;
+        }
+
+        /* yellow - function names */
+        .hljs-title.class_ {
+            color: #4ec9b0;
+        }
+
+        /* teal - class names */
+        .hljs-string {
+            color: #ce9178;
+        }
+
+        /* orange - strings */
+        .hljs-number {
+            color: #b5cea8;
+        }
+
+        /* light green - numbers */
+        .hljs-comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        /* green - comments */
+        .hljs-variable {
+            color: #9cdcfe;
+        }
+
+        /* light blue - variables */
+        .hljs-params {
+            color: #9cdcfe;
+        }
+
+        /* parameters */
+        .hljs-literal {
+            color: #569cd6;
+        }
+
+        /* true, false, null */
+        .hljs-meta {
+            color: #c586c0;
+        }
+
+        /* preprocessor directives */
+        .hljs-attr {
+            color: #9cdcfe;
+        }
+
+        .hljs-symbol {
+            color: #d4d4d4;
+        }
+
+        .hljs-punctuation {
+            color: #d4d4d4;
+        }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
     <style>
@@ -1855,6 +1939,820 @@ namespace THTuan02
 }`
                     }
                 }
+            },
+            "OnTapKiemTra1": {
+                "QuanLyShop": {
+                    "Program.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLyShop
+{
+	internal class Program
+	{
+		static void Main(string[] args)
+		{
+			Console.OutputEncoding = Encoding.Unicode;
+			Console.InputEncoding = Encoding.Unicode;
+			int chon;
+			Shop myShop = new Shop();
+			do
+			{
+				Console.WriteLine("===== QUAN LY TAI SHOP =====");
+				Console.WriteLine("1. Khoi tao danh sach san pham.");
+				Console.WriteLine("2. Xuat danh sach cac san pham.");
+				Console.WriteLine("3. Them san pham.");
+				Console.WriteLine("4. Nhap hang");
+				Console.WriteLine("5. Xuat hang");
+				Console.WriteLine("6. Tim kiem san pham theo ma san pham.");
+				Console.WriteLine("7. Xoa san pham.");
+				Console.Write("---> Lua chon: ");
+				chon = int.Parse(Console.ReadLine());
+
+				switch (chon)
+				{
+					case 1:
+						{
+							myShop.Nhap();
+							Console.WriteLine("Da khoi tao.");
+						}
+						break;
+					case 2:
+						{
+							Console.WriteLine("===== DANH SACH SAN PHAM =====");
+							myShop.Xuat();
+						}
+						break;
+					case 3:
+						{
+							string maSP, tenSP;
+							int soLuong;
+							Console.WriteLine("===== Thêm một sản phẩm vào =====");
+							Console.Write("Nhap ma san pham muon them: ");
+							maSP = Console.ReadLine();
+							Console.Write("Nhap ten san pham muon them: ");
+							tenSP = Console.ReadLine();
+							Console.Write("Nhap so luong: ");
+							soLuong = int.Parse(Console.ReadLine());
+							if (myShop.addProduct(maSP, tenSP, soLuong))
+							{
+								Console.WriteLine("Them san pham thanh cong.");
+							}
+							else
+							{
+								Console.WriteLine("Them san pham that bai.");
+							}
+						}
+						break;
+					case 4:
+						{
+							int soLuong;
+							string maSP;
+							Console.WriteLine("===== Nhập thêm hàng cho 1 sản phẩm =====");
+							Console.Write("Nhap ma san pham: ");
+							maSP = Console.ReadLine();
+							Console.Write("Nhap so luong: ");
+							soLuong = int.Parse(Console.ReadLine());
+							if (myShop.importProduct(maSP, soLuong))
+							{
+								Console.WriteLine("Nhap hang thanh cong.");
+								int index = myShop.searchProduct(maSP);
+								myShop.showProduct(index);
+							}
+							else
+							{
+								Console.WriteLine("Nhap hang that bai.");
+							}
+						}
+						break;
+					case 5:
+						{
+							int soLuong;
+							string maSP;
+							Console.WriteLine("===== Xuất hàng bán cho 1 sản phẩm =====");
+							Console.Write("Nhap ma san pham: ");
+							maSP = Console.ReadLine();
+							Console.Write("Nhap so luong: ");
+							soLuong = int.Parse(Console.ReadLine());
+							if (myShop.exportProduct(maSP, soLuong))
+							{
+								Console.WriteLine("Xuat hang thanh cong.");
+								int index = myShop.searchProduct(maSP);
+								myShop.showProduct(index);
+							}
+							else
+							{
+								Console.WriteLine("Xuat hang that bai.");
+							}
+						}
+						break;
+					case 6:
+						{
+							string maSP;
+							Console.WriteLine("===== Tìm kiếm và xuất thông tin sản phẩm =====");
+							maSP= Console.ReadLine();
+							int index = myShop.searchProduct(maSP);
+							if (index == -1)
+							{
+								Console.WriteLine("Khong ton sai san pham.");
+							}
+							else
+							{
+								Console.WriteLine("Da tim thay.");
+								myShop.showProduct(index);
+							}
+						}
+						break;
+					case 7:
+						{
+							string maSP;
+							Console.WriteLine("===== Xoá một sản phẩm =====");
+							maSP = Console.ReadLine();
+							if (myShop.removeProduct(maSP))
+							{
+								Console.WriteLine("Xoa thanh cong.");
+							}
+							else
+							{
+								Console.WriteLine("Xoa that bai.");
+							}
+						}
+						break;
+					default:
+						Console.WriteLine("Lua chon khong hop le.");
+						break;
+				}
+
+				Console.WriteLine("Nhan phim bat ky de tiep tuc, nhan ESC de thoat.");
+			} while (Console.ReadKey().Key != ConsoleKey.Escape);
+
+		}
+	
+	}
+}`,
+                    "Product.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLyShop
+{
+	public class Product
+	{
+		public string productNumber { get; set; }
+		public string productName { get; set; }
+		public int productQuantity { get; set; }
+		public Product(string maSanPham ="", string tenSanPham = "", int soLuong = 0) 
+		{ 
+			productNumber = maSanPham;
+			productName = tenSanPham;
+			productQuantity = soLuong;
+		}
+		public bool importProduct(int quantity)
+		{
+			if (quantity > 0)
+			{
+				this.productQuantity += quantity;
+				return true;
+			}
+			return false;
+		}
+		public bool exportProduct(int quantity)
+		{
+			if (quantity > 0 && quantity <= productQuantity)
+			{
+				this.productQuantity -= quantity;
+				return true;
+			}
+			return false;
+		}
+		public override string ToString()
+		{
+			return $"Ma san pham: {productNumber}\\tTen san pham: {productName}\\tSo luong: {productQuantity}";
+		}
+	}
+}`,
+                    "Shop.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLyShop
+{
+	public class Shop
+	{
+		private List<Product> products;
+		public Shop()
+		{
+			products = new List<Product>();
+		}
+		public void Nhap()
+		{
+			products.Clear();
+			products.Add(new Product("001", "Ban phim", 3));
+			products.Add(new Product("002", "Chuot", 100));
+			products.Add(new Product("003", "Man hinh", 50));
+		}
+		public void Xuat()
+		{
+			if (products.Count > 0)
+			{
+				foreach (Product p in products)
+				{
+					Console.WriteLine(p.ToString());
+				}
+			}
+			else
+			{
+				Console.WriteLine("Danh sach rong.");
+			}
+		}
+		public int searchProduct(string maSP)
+		{
+			for (int i = 0; i < products.Count; i++)
+			{
+				if (products[i].productNumber.ToUpper() == maSP.ToUpper())
+				{
+					return i;
+				}
+			}
+			return -1;
+		}
+		public bool addProduct(string maSP, string ten, int soLuong)
+		{
+			if (searchProduct(maSP) != -1)
+			{
+				return false;
+			}
+			else
+			{
+				products.Add(new Product(maSP, ten, soLuong));
+				return true;
+			}			
+		}
+		public bool importProduct(string maSP, int soLuong)
+		{
+			int index = searchProduct(maSP);
+			if ((index != -1) && (soLuong > 0))
+			{
+				products[index].importProduct(soLuong);
+				//Console.WriteLine(products[index].ToString());
+				return true;
+			}
+			return false;
+		}
+		public bool exportProduct(string maSP, int soLuong)
+		{
+			int index = searchProduct(maSP);
+			if ((index != -1) && (soLuong > 0 && soLuong <= products[index].productQuantity))
+			{
+				products[index].exportProduct(soLuong);
+				//Console.WriteLine(products[index].ToString());
+				return true;
+			}
+			return false;
+		}
+		public bool removeProduct(string maSP)
+		{
+			int index = searchProduct(maSP);
+			if (index != -1)
+			{
+				products.RemoveAt(index);
+				return true;
+			}
+			return false;
+		}
+		public void showProduct(int index)
+		{
+			Console.WriteLine(products[index].ToString());
+		}
+	}
+}`
+                },
+                "QuanLyShopLan2": {
+                    "Program.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLyShopLan2
+{
+	internal class Program
+	{
+		static void Main(string[] args)
+		{
+			Console.OutputEncoding = Encoding.UTF8;
+			Console.InputEncoding = Encoding.UTF8;
+			int chon;
+			Shop myShop = new Shop();
+			do
+			{
+				Console.WriteLine("\\n=== QUAN LY TAI SHOP ===");
+				Console.WriteLine("1. Khai báo và tạo danh sách các sản phẩm với các giá trị tuỳ ý;");
+				Console.WriteLine("2. Xuất danh sách sản phẩm ra màn hình;");
+				Console.WriteLine("3. Thêm một sản phẩm vào danh sách với các thông tin nhập từ bàn phím;");
+				Console.WriteLine("4. Nhập thêm hàng cho 1 sản phẩm");
+				Console.WriteLine("5. Xuất hàng bán cho 1 sản phẩm");
+				Console.WriteLine("6. Tìm kiếm và xuất thông tin sản phẩm với mã sản phẩm nhập từ bàn phím;");
+				Console.WriteLine("7. Xoá một sản phẩm trong danh sách mã sản phẩm nhập từ bàn phím;");
+				Console.Write("---> LUA CHON: ");
+				chon = int.Parse(Console.ReadLine());
+				switch (chon)
+				{
+					case 1:
+						{
+							myShop.NhapShop();
+						}
+						break;
+					case 2:
+						{
+							myShop.XuatShop();
+						}
+						break;
+					case 3:
+						{
+							string ten, maSP;
+							int soLuong;
+							Console.WriteLine("=== THEM SAN PHAM ===");
+							Console.Write("Nhap ma san pham: ");
+							maSP = Console.ReadLine();
+							Console.Write("Nhap ten san pham: ");
+							ten = Console.ReadLine();
+							Console.Write("Nhap so luong san pham: ");
+							soLuong = int.Parse(Console.ReadLine());
+							if (myShop.addProduct(maSP, ten, soLuong))
+							{
+								Console.WriteLine("Them thanh cong.");
+							}
+							else
+							{
+								Console.WriteLine("Them that bai.");
+							}
+						}
+						break;
+					case 4:
+						{
+							string maSP;
+							int soLuong;
+							Console.WriteLine("=== NHAP SAN PHAM ===");
+							Console.Write("Nhap ma san pham: ");
+							maSP = Console.ReadLine();							
+							Console.Write("Nhap so luong san pham: ");
+							soLuong = int.Parse(Console.ReadLine());
+							if (myShop.importProduct(maSP, soLuong))
+							{
+								Console.WriteLine("Nhap thanh cong.");
+								int index = myShop.searchProduct(maSP);
+								myShop.showProduct(index);
+							}
+							else
+							{
+								Console.WriteLine("Nhap that bai.");
+							}
+						}
+						break;
+					case 5:
+						{
+							string maSP;
+							int soLuong;
+							Console.WriteLine("=== XUAT SAN PHAM ===");
+							Console.Write("Nhap ma san pham: ");
+							maSP = Console.ReadLine();
+							Console.Write("Nhap so luong san pham: ");
+							soLuong = int.Parse(Console.ReadLine());
+							if (myShop.exportProduct(maSP, soLuong))
+							{
+								Console.WriteLine("Xuat thanh cong.");
+								int index = myShop.searchProduct(maSP);
+								myShop.showProduct(index);
+							}
+							else
+							{
+								Console.WriteLine("Xuat that bai.");
+							}
+						}
+						break;
+					case 6:
+						{
+							string maSP;
+							Console.Write("Nhap ma san pham: ");
+							maSP = Console.ReadLine();
+							int index = myShop.searchProduct(maSP);
+							if(index != -1)
+							{
+								Console.WriteLine("Tim thay san pham.");
+								myShop.showProduct(index);
+							}
+						}
+						break;
+					case 7:
+						{
+							string maSP;
+							Console.Write("Nhap ma san pham: ");
+							maSP = Console.ReadLine();
+							if (myShop.removeProduct(maSP))
+							{
+								Console.WriteLine("Xoa thanh cong.");
+							}
+							else
+							{
+								Console.WriteLine("Xoa that bai.");
+							}
+						}
+						break;
+					default:
+						{
+							Console.WriteLine("Lua chon khong hop le.");
+						}
+						break;						
+				}
+
+				Console.WriteLine("Nhan phim bat ky de tiep tuc, nhan ESC de thoat.");
+			} while (Console.ReadKey().Key != ConsoleKey.Escape);
+		}
+	}
+}`,
+                    "Product.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLyShopLan2
+{
+	public class Product
+	{
+		public string productNumber { get; set; }
+		public string productName { get; set; }		
+		public int productQuantity { get; set; }
+		public Product(string productNumber = "", string productName = "", int productQuantity = 0)
+		{
+			this.productNumber = productNumber;
+			this.productName = productName;			
+			this.productQuantity = productQuantity;
+		}
+		public bool importProduct(int soLuong)
+		{
+			if (soLuong > 0)
+			{
+				this.productQuantity += soLuong;
+				return true;
+			}
+			return false;
+		}
+		public bool exportProduct(int soLuong)
+		{
+			if (soLuong > 0 && soLuong <= this.productQuantity)
+			{
+				this.productQuantity -= soLuong;
+				return true;
+			}
+			return false;	
+		}
+		public override string ToString()
+		{
+			return string.Format("{0,-10}{1,-20}{2,-10}",productNumber,productName, productQuantity);
+		}
+	}
+}`,
+                    "Shop.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLyShopLan2
+{
+	public class Shop
+	{
+		private List<Product> listProduct;
+		public Shop()
+		{
+			listProduct = new List<Product>();
+		}
+		public void NhapShop()
+		{
+			listProduct.Clear();
+			listProduct.Add(new Product("SP01", "Ban phim", 20));
+			listProduct.Add(new Product("SP02", "Chuot", 50));
+			listProduct.Add(new Product("SP03", "Man hinh", 30));
+			Console.WriteLine("Khoi tao thanh cong.");
+		}
+		public void XuatShop()
+		{
+			Console.WriteLine("{0,-10}{1,-20}{2,-10}","Ma SP", "Ten SP", "So luong");
+			foreach (var item in listProduct)
+			{
+				Console.WriteLine(item.ToString());
+			}
+		}
+		public bool addProduct(string maSP, string ten, int soLuong)
+		{
+			if (searchProduct(maSP) != -1)
+			{
+				return false;
+			}
+			else
+			{
+				listProduct.Add(new Product(maSP, ten, soLuong));
+				return true;
+			}
+		}
+		public bool importProduct(string maSP, int soLuong)
+		{
+			int index = searchProduct(maSP);
+			if (index != -1)
+			{
+				return listProduct[index].importProduct(soLuong);
+				
+			}
+			return false ;
+		}
+		public bool exportProduct(string maSP, int soLuong)
+		{
+			int index = searchProduct(maSP);
+			if (index != -1)
+			{
+				return listProduct[index].exportProduct(soLuong);
+				
+			}
+			return false;
+		}
+		public int searchProduct(string maSP)
+		{
+			for (int i = 0; i < listProduct.Count; i++)
+			{
+				if (listProduct[i].productNumber.ToUpper() == maSP.ToUpper())
+				{
+					return i;
+				}
+			}
+			return -1;
+		}
+		public bool removeProduct(string maSP)
+		{
+			int index = searchProduct(maSP);
+			if (index != -1)
+			{
+				listProduct.RemoveAt(index);
+				return true;
+			}
+			return false;
+		}
+		public void showProduct(int index)
+		{
+			Console.WriteLine(listProduct[index].ToString());
+		}
+	}
+}`
+                },
+                "QuanLySinhVien": {
+                    "Program.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLySinhVien
+{
+	internal class Program
+	{
+		static void Main(string[] args)
+		{
+			List<Student> listStudents = new List<Student>();
+			int chon;
+			do
+			{
+				Console.WriteLine("\\n===== QUAN LY SINH VIEN =====");
+				Console.WriteLine("1. Nhap n sinh vien (n la so luong, nhap tu ban phim).");
+				Console.WriteLine("2. Hien thi tat ca thong tin sinh vien ra man hinh.");
+				Console.WriteLine("3. Hien thi sinh vien co diem trung binh thap nhat va cao nhat.");
+				Console.WriteLine("4. Tim kiem sinh vien theo ma sinh vien (ma sinh vien nhap tu ban phim).");
+				Console.WriteLine("5. Sap xep sinh vien theo ten va hien thi ra man hinh.");
+				Console.WriteLine("6. Hien thi cac sinh vien co hoc bong (theo thu tu diem cao den thap).");
+				Console.Write("----> LUA CHON: ");
+				chon = int.Parse(Console.ReadLine());
+				switch (chon) 
+				{
+					case 1:
+						{
+							int n;
+							Console.Write("Nhap so luong sinh vien: ");
+							n = int.Parse(Console.ReadLine());
+							for (int i = 0; i < n; i++)
+							{
+								Student student = new Student();
+								student.Nhap();
+								listStudents.Add(student);
+							}
+						}
+						break;
+					case 2:
+						{
+							if (listStudents.Count == 0)
+							{
+								Console.WriteLine("Danh sach rong.");
+							}
+							else
+							{
+								foreach(Student student in listStudents)
+								{
+									student.Xuat();
+								}	
+							}
+						}
+						break;
+					case 3:
+						{
+							double diemMax = listStudents.Max(o => o.dtb);
+							double diemMin = listStudents.Min(o => o.dtb);
+							List<Student> listMax = listStudents.FindAll(o => o.dtb == diemMax);
+							List<Student> listMin = listStudents.FindAll(o => o.dtb == diemMin);
+							Console.WriteLine("=== DANH SACH SINH VIEN DIEM TRUNG BINH CAO NHAT ===");
+							foreach(Student student in listMax)
+							{
+								student.Xuat();
+							}
+							Console.WriteLine("\\n=== DANH SACH SINH VIEN DIEM TRUNG BINH THAP NHAT ===");
+							foreach (Student student in listMin)
+							{
+								student.Xuat();
+							}
+						}
+						break;
+					case 4:
+						{
+							string timKiem;
+							Console.Write("Nhap ma sinh vien muon tim: ");
+							timKiem = Console.ReadLine();
+							Student student = listStudents.Find(o => o.maSV == timKiem);
+							if (student == null)
+							{
+								Console.WriteLine("Khong tim thay.");
+							}
+							else
+							{
+								Console.WriteLine("Da tim thay.");
+								student.Xuat();
+							}	
+						}
+						break;
+					case 5:
+						{
+							listStudents = listStudents.OrderBy(o => o.ten).ToList();
+							//listStudents.Sort((o1, o2) => o1.ten.CompareTo(o2.ten));
+							Console.WriteLine("\\n=== DANH SACH SINH VIEN SAP XEP THEO TEN ===");
+							foreach (Student student in listStudents)
+							{
+								student.Xuat();
+							}	
+						}
+						break;
+					case 6:
+						{
+							List<Student> listHB = listStudents.FindAll(o => o.XetHocBong());
+							if (listHB.Count == 0)
+							{
+								Console.WriteLine("Khong co sinh vien dat hoc bong.");
+							}	
+							else
+							{
+								Console.WriteLine("=== DANH SACH SINH VIEN DAT HOC BONG ===");
+								listHB.Sort((o1, o2) => o2.dtb.CompareTo(o1.dtb));
+								foreach(Student student in listHB)
+								{
+									student.Xuat();
+								}	
+							}	
+						}
+						break;
+					default:
+						{
+							Console.WriteLine("Lua chon khong hop le.");
+						}
+						break;
+				}
+
+
+
+				Console.WriteLine("Nhan phim khac de tiep tuc, nhan ESC de dung.");
+			} while (Console.ReadKey().Key != ConsoleKey.Escape);
+		}
+	}
+}`,
+                    "Person.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLySinhVien
+{
+	public class Person
+	{
+		public string ten { get; set; }
+		public bool phai { get; set; } //true = nam, false = nu
+		public DateTime ngaySinh { get; set; }
+		public string diaChi { get; set; }
+		public Person(string ten, bool phai, DateTime ngaySinh, string diaChi)
+		{
+			this.ten = ten;
+			this.phai = phai;
+			this.ngaySinh = ngaySinh;
+			this.diaChi = diaChi;
+		}
+		public Person() 
+		{
+			this.ten = string.Empty;
+			this.phai = true;
+			DateTime htai = DateTime.Now;
+			this.ngaySinh = htai.AddYears(-18);
+			this.diaChi = "";
+		}
+		~Person() { }
+		public virtual void Nhap()
+		{
+			Console.WriteLine("=== NHAP THONG TIN ===");
+			Console.Write("Nhap ten: ");
+			ten = Console.ReadLine();
+			Console.Write("Nhap ngay sinh (dd/mm/yyyy): ");
+			ngaySinh = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
+			Console.Write("Nhap dia chi: ");
+			diaChi = Console.ReadLine();
+			Console.WriteLine("Nhap phai (true = nam, false = nu): ");
+			phai = bool.Parse(Console.ReadLine());
+		}
+		public virtual void Xuat()
+		{
+			Console.WriteLine("=== THONG TIN ===");
+			Console.WriteLine("Ten: " + ten);
+			Console.WriteLine("Ngay sinh: " + ngaySinh.ToString("dd/MM/yyyy"));
+			Console.WriteLine("Dia Chi: " + diaChi);
+			Console.WriteLine("Phai: " + (phai?"nam":"nu"));
+		}
+	}
+}`,
+                    "Student.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuanLySinhVien
+{
+	public class Student: Person
+	{
+		public string maSV {  get; set; }
+		public string email { get; set; }
+		public double dtb { get; set; }
+		public Student(): base()
+		{
+			maSV = string.Empty;
+			email = string.Empty;
+			dtb = 0.0;
+		}
+		public Student(string ten, bool phai, DateTime ngaySinh, string diaChi, string maSV, string email, double dtb)
+			:base(ten, phai, ngaySinh, diaChi)
+		{
+			this.maSV = maSV;
+			this.email = email;
+			this.dtb = dtb;
+		}
+		public override void Nhap()
+		{
+			base.Nhap();
+			Console.Write("Nhap ma so sinh vien: ");
+			maSV = Console.ReadLine();
+			Console.Write("Nhap email sinh vien: ");
+			email = Console.ReadLine();
+			Console.Write("Nhap diem trung binh: ");
+			dtb = double.Parse(Console.ReadLine());
+		}
+		public override void Xuat()
+		{
+			base.Xuat();
+			Console.WriteLine("MSSV: " + maSV);
+			Console.WriteLine("Email: " + email);
+			Console.WriteLine("Diem trung binh: " + dtb.ToString("#.0"));
+		}
+		public bool XetHocBong()
+		{
+			if (dtb > 8)
+			{
+				return true;
+			}
+			return false;
+		}
+	}
+}`
+                }
             }
         };
 
@@ -1914,6 +2812,8 @@ namespace THTuan02
 
             const codeEl = document.getElementById('codeContent');
             codeEl.textContent = code;
+            codeEl.removeAttribute('data-highlighted');
+            codeEl.className = 'language-csharp';
             hljs.highlightElement(codeEl);
 
             // Update active state
