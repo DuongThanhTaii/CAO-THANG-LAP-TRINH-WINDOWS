@@ -2753,6 +2753,266 @@ namespace QuanLySinhVien
 	}
 }`
                 }
+            },
+            "Chuong02_TimKiem": {
+                "BFS": {
+                    "Program.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BFS
+{
+	internal class Program
+	{
+		static void Main(string[] args)
+		{
+			int[,] matrix = {
+				//0  1  2  3  4  5  6  7  8
+				{ 0, 1, 1, 1, 0, 0, 0, 0, 0 }, //0
+				{ 0, 0, 0, 1, 0, 1, 0, 0, 0 }, //1
+				{ 0, 0, 0, 0, 1, 0, 0, 0, 0 }, //2
+				{ 0, 0, 0, 0, 0, 1, 1, 0, 0 }, //3
+				{ 0, 0, 0, 1, 0, 0, 1, 0, 0 }, //4
+				{ 0, 0, 0, 0, 0, 0, 0, 1, 0 }, //5
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 1 }, //6
+				{ 0, 0, 0, 0, 0, 0, 1, 0, 0 }, //7
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }  //8
+			};
+			int diemDau = 0;
+			int diemDich = 8;
+			int[] pre;
+			BFS(out pre, matrix, diemDau, diemDich);
+			if (pre[diemDich] == -1)
+			{
+				Console.WriteLine("Khong co duong di.");
+			}
+			else
+			{
+				XuatDuongDi(pre, diemDau, diemDich);
+			}
+			Console.ReadLine();
+		}
+		static void BFS(out int[] pre, int[,] matrix, int dau, int dich)
+		{
+			int soDiem = matrix.GetLength(0);
+			pre = new int[soDiem];
+			for (int i = 0; i < soDiem; i++)
+			{
+				pre[i] = -1;
+			}
+			List<int> hangDoi = new List<int>();
+			hangDoi.Add(dau);
+			while (hangDoi.Count > 0 && pre[dich] == -1)
+			{
+				int hienTai = hangDoi[0];
+				hangDoi.RemoveAt(0);
+				for (int i = 0; i < soDiem; i++)
+				{
+					if ((matrix[hienTai, i] == 1) && pre[i] == -1)
+					{
+						hangDoi.Add(i);
+						pre[i] = hienTai;
+					}
+				}
+			}
+		}
+
+		static void XuatDuongDi(int[] pre, int dau, int dich)
+		{
+			List<int> path = new List<int>();
+			int lui = dich;
+			while (lui != -1)
+			{
+				path.Add(lui);
+				lui = pre[lui];
+			}
+			path.Reverse();
+			Console.WriteLine(string.Join(" ---> ", path.ToArray()));
+		}
+	}
+}`
+                },
+                "DFS": {
+                    "Program.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DFS
+{
+	internal class Program
+	{
+		static void Main(string[] args)
+		{
+			int[,] matrix = {
+				//a  b  c  d  e  f  6  7  8
+				{ 0, 1, 1, 1, 0, 0, 0, 0, 0 }, //a
+				{ 0, 0, 0, 1, 1, 0, 0, 0, 0 }, //b
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }, //c
+				{ 0, 0, 1, 0, 0, 1, 0, 0, 0 }, //d
+				{ 0, 0, 0, 1, 0, 0, 0, 0, 0 }, //e
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }, //f
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }, //6
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }, //7
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }  //8
+			};
+			int diemDau = 0;
+			int diemDich = 5;
+			int[] pre;
+			DFS(out pre, matrix, diemDau, diemDich);
+			if (pre[diemDich] == -1)
+			{
+				Console.WriteLine("Khong co duong di.");
+			}
+			else
+			{
+				XuatDuongDi(pre, diemDau, diemDich);
+			}
+			Console.ReadLine();
+		}
+		static void DFS(out int[] pre, int[,] matrix, int dau, int dich)
+		{
+			int soDiem = matrix.GetLength(0);
+			pre = new int[soDiem];
+			for (int i = 0; i < soDiem; i++)
+			{
+				pre[i] = -1;
+			}
+			List<int> hangDoi = new List<int>(); //stack theo lifo
+			hangDoi.Add(dau);
+			while (hangDoi.Count > 0 && pre[dich] == -1)
+			{
+				int chiSoCuoi = hangDoi.Count - 1;
+				int hienTai = hangDoi[chiSoCuoi];
+				hangDoi.RemoveAt(chiSoCuoi);
+				for (int i = 0; i < soDiem; i++)
+				{
+					if ((matrix[hienTai, i] == 1) && pre[i] == -1 && i != dau)
+					{
+						hangDoi.Add(i);
+						pre[i] = hienTai;
+					}
+				}
+			}
+		}
+
+
+
+
+		static void XuatDuongDi(int[] pre, int dau, int dich)
+		{
+			List<int> path = new List<int>();
+			int lui = dich;
+			while (lui != -1)
+			{
+				path.Add(lui);
+				lui = pre[lui];
+			}
+			path.Reverse();
+			Console.WriteLine(string.Join(" ---> ", path.ToArray()));
+		}
+	}
+}`
+                },
+                "UCS": {
+                    "Program.cs": `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace UCS
+{
+	internal class Program
+	{
+		static void Main(string[] args)
+		{
+			int[,] matrix = {
+				//a   b   c   d   e   f   g   h
+                { 0,  5,  2,  3,  0,  0,  0,  0 },  // a (0)
+                { 0,  0,  0,  0,  0,  1,  0,  0 },  // b (1)
+                { 0,  0,  0,  6,  0,  0,  0,  0 },  // c (2)
+                { 0,  1,  0,  0,  7,  3,  2,  0 },  // d (3)
+                { 0,  0,  0,  0,  0,  0,  0,  1 },  // e (4) 
+                { 0,  0,  0,  0,  4,  0,  0,  0 },  // f (5)
+                { 0,  0,  0,  0,  9,  0,  0,  15 }, // g (6) 
+                { 0,  0,  0,  0,  0,  0,  0,  0 }   // h (7)
+            };
+
+			int[] pre;
+			int[] cost;
+			int diemDau = 0;
+			int diemDich = 7;
+			UCS(out pre, out cost, matrix, diemDau, diemDich);
+			if (pre[diemDich] == -1)
+			{
+				Console.WriteLine("Khong co duong di.");
+			}
+			else
+			{
+				XuatDuongDi(pre, cost, diemDau, diemDich);
+			}
+			Console.ReadLine();
+		}
+		static void UCS(out int[] pre, out int[] cost, int[,] matrix, int dau, int dich)
+		{
+			int soDiem = matrix.GetLength(0);
+			pre = new int[soDiem];
+			cost = new int[soDiem];
+			for (int i = 0; i < soDiem; i++)
+			{
+				pre[i] = -1;
+				cost[i] = int.MaxValue;
+			}
+			List<int> hangDoi = new List<int>();
+			hangDoi.Add(dau);
+			pre[dau] = dau;
+			cost[dau] = 0;
+			while (hangDoi.Count > 0)
+			{
+				int[] temp = cost;
+				hangDoi.Sort((a, b) => temp[a].CompareTo(temp[b]));
+				int hienTai = hangDoi[0];
+				hangDoi.RemoveAt(0);
+				if (hienTai == dich) break;
+				for (int i = 0; i < soDiem; i++)
+				{
+					if (matrix[hienTai, i] != 0)
+					{
+						int newCost = cost[hienTai] + matrix[hienTai, i];
+						if (newCost < cost[i])
+						{
+							pre[i] = hienTai;
+							cost[i] = newCost;
+							if (!hangDoi.Contains(i))
+							{
+								hangDoi.Add(i);
+							}
+						}						
+					}
+				}
+			}
+		}
+		static void XuatDuongDi(int[] pre, int[] cost, int dau, int dich)
+		{
+			List<int> path = new List<int>();
+			int lui = dich;
+			while (lui != dau)
+			{
+				path.Add(lui);
+				lui = pre[lui];
+			}
+			path.Add(dau);
+			path.Reverse();
+			Console.WriteLine(string.Join(" ---> ", path.ToArray()));
+			Console.WriteLine("Voi tong chi phi la: " + cost[dich]);
+		}
+	}
+}`
+                }
             }
         };
 
@@ -2800,8 +3060,8 @@ namespace QuanLySinhVien
         document.getElementById('totalFiles').textContent = totalFiles;
         document.getElementById('totalLines').textContent = totalLines;
 
-        // Open first level folders
-        document.querySelectorAll('.file-tree > .folder').forEach(f => f.classList.add('open'));
+        // Folders are closed by default, click to open
+        // document.querySelectorAll('.file-tree > .folder').forEach(f => f.classList.add('open'));
 
         // Show code
         function showCode(path, code) {
